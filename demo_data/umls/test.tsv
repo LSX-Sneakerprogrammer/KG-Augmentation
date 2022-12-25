@@ -1,0 +1,10 @@
+steroid	interacts_with	eicosanoid
+clinical_attribute	isa	conceptual_entity
+body_location_or_region	location_of	physiologic_function
+neoplastic_process	isa	disease_or_syndrome
+carbohydrate	affects	molecular_function
+disease_or_syndrome	affects	organ_or_tissue_function
+substance	issue_in	occupation_or_discipline
+laboratory_or_test_result	evaluation_of	genetic_function
+chemical_viewed_functionally	isa	entity
+organophosphorus_compound	ingredient_of	clinical_drug

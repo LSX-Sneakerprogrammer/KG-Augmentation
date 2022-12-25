@@ -43,7 +43,7 @@ from pytorch_pretrained_bert.modeling import BertForSequenceClassification, Bert
 from pytorch_pretrained_bert.tokenization import BertTokenizer
 from pytorch_pretrained_bert.optimization import BertAdam, WarmupLinearSchedule
 
-os.environ['CUDA_VISIBLE_DEVICES']= '0'
+# os.environ['CUDA_VISIBLE_DEVICES']= '0'
 #torch.backends.cudnn.deterministic = True
 
 logger = logging.getLogger(__name__)

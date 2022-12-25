@@ -1,0 +1,92 @@
+measures	measures
+derivative_of	derivative of
+disrupts	disrupts
+prevents	prevents
+conceptually_related_to	conceptually related to
+manifestation_of	manifestation of
+diagnoses	diagnoses
+evaluation_of	evaluation of
+contains	contains
+co-occurs_with	co-occurs with
+conceptual_part_of	conceptual part of
+performs	performs
+degree_of	degree of
+interacts_with	interacts with
+uses	uses
+issue_in	issue in
+assesses_effect_of	assesses effect of
+property_of	property of
+precedes	precedes
+result_of	result of
+causes	causes
+practices	practices
+ingredient_of	ingredient of
+analyzes	analyzes
+surrounds	surrounds
+indicates	indicates
+associated_with	associated with
+affects	affects
+location_of	location of
+produces	produces
+process_of	process of
+measurement_of	measurement of
+connected_to	connected to
+carries_out	carries out
+method_of	method of
+adjacent_to	adjacent to
+occurs_in	occurs in
+consists_of	consists of
+interconnects	interconnects
+manages	manages
+complicates	complicates
+part_of	part of
+treats	treats
+isa	is a
+developmental_form_of	developmental form of
+exhibits	exhibits
+SIM_measures	# measures
+SIM_derivative_of	# derivative of
+SIM_disrupts	# disrupts
+SIM_prevents	# prevents
+SIM_conceptually_related_to	# conceptually related to
+SIM_manifestation_of	# manifestation of
+SIM_diagnoses	# diagnoses
+SIM_evaluation_of	# evaluation of
+SIM_contains	# contains
+SIM_co-occurs_with	# co-occurs with
+SIM_conceptual_part_of	# conceptual part of
+SIM_performs	# performs
+SIM_degree_of	# degree of
+SIM_interacts_with	# interacts with
+SIM_uses	# uses
+SIM_issue_in	# issue in
+SIM_assesses_effect_of	# assesses effect of
+SIM_property_of	# property of
+SIM_precedes	# precedes
+SIM_result_of	# result of
+SIM_causes	# causes
+SIM_practices	# practices
+SIM_ingredient_of	# ingredient of
+SIM_analyzes	# analyzes
+SIM_surrounds	# surrounds
+SIM_indicates	# indicates
+SIM_associated_with	# associated with
+SIM_affects	# affects
+SIM_location_of	# location of
+SIM_produces	# produces
+SIM_process_of	# process of
+SIM_measurement_of	# measurement of
+SIM_connected_to	# connected to
+SIM_carries_out	# carries out
+SIM_method_of	# method of
+SIM_adjacent_to	# adjacent to
+SIM_occurs_in	# occurs in
+SIM_consists_of	# consists of
+SIM_interconnects	# interconnects
+SIM_manages	# manages
+SIM_complicates	# complicates
+SIM_part_of	# part of
+SIM_treats	# treats
+SIM_isa	# is a
+SIM_developmental_form_of	# developmental form of
+SIM_exhibits	# exhibits

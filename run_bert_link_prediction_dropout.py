@@ -94,10 +94,6 @@ class DataProcessor(object):
     def get_train_examples(self, data_dir):
         """Gets a collection of `InputExample`s for the train set."""
         raise NotImplementedError()
-    
-    def get_train_extend_examples(self, data_dir):
-        """Gets a collection of `InputExample`s for the multi-hop train set."""
-        raise NotImplementedError()
 
     def get_dev_examples(self, data_dir):
         """Gets a collection of `InputExample`s for the dev set."""
@@ -132,12 +128,7 @@ class KGProcessor(DataProcessor):
     def get_train_examples(self, data_dir):
         """See base class."""
         return self._create_examples(
-            self._read_tsv(os.path.join(data_dir, "similar_train-85.tsv")), "train", data_dir)
-        
-    def get_train_extend_examples(self, data_dir):
-        """See base class."""
-        return self._create_examples(
-            self._read_tsv(os.path.join(data_dir, "similar_train-two-assign.tsv")), "train_extend", data_dir)
+            self._read_tsv(os.path.join(data_dir, "implicit_train.tsv")), "train", data_dir)
 
     def get_dev_examples(self, data_dir):
         """See base class."""
@@ -175,11 +166,7 @@ class KGProcessor(DataProcessor):
 
     def get_train_triples(self, data_dir):
         """Gets training triples."""
-        return self._read_tsv(os.path.join(data_dir, "similar_train-85.tsv"))
-    
-    def get_train_extend_triples(self, data_dir):
-        """Gets training triples."""
-        return self._read_tsv(os.path.join(data_dir, "similar_train-two-assign.tsv"))
+        return self._read_tsv(os.path.join(data_dir, "implicit_train.tsv"))
 
     def get_dev_triples(self, data_dir):
         """Gets validation triples."""
@@ -657,9 +644,6 @@ def main():
     parser.add_argument("--do_train",
                         action='store_true',
                         help="Whether to run training.")
-    parser.add_argument("--do_extend_train",
-                        action='store_true',
-                        help="Whether to run multi-hop training.")
     parser.add_argument("--do_eval",
                         action='store_true',
                         help="Whether to run eval on the dev set.")
@@ -788,13 +772,8 @@ def main():
     num_train_optimization_steps = 0
     if args.do_train:
         train_examples = processor.get_train_examples(args.data_dir)
-        if args.do_extend_train:
-            extend_train_examples = processor.get_train_extend_examples(args.data_dir)
-            num_train_optimization_steps = int(
-                (len(train_examples) + len(extend_train_examples)) / args.train_batch_size / args.gradient_accumulation_steps) * args.num_train_epochs
-        else:
-            num_train_optimization_steps = int(
-                len(train_examples) / args.train_batch_size / args.gradient_accumulation_steps) * args.num_train_epochs
+        num_train_optimization_steps = int(
+            len(train_examples) / args.train_batch_size / args.gradient_accumulation_steps) * args.num_train_epochs
         if args.local_rank != -1:
             num_train_optimization_steps = num_train_optimization_steps // torch.distributed.get_world_size()
 
@@ -865,14 +844,8 @@ def main():
     if args.do_train:
         train_features = convert_examples_to_features(
             train_examples, label_list, args.max_seq_length, tokenizer)
-        if args.do_extend_train:
-            extend_train_features = convert_examples_to_features(
-                extend_train_examples, label_list, args.max_seq_length, tokenizer)
-            train_features.extend(extend_train_features)
         logger.info("***** Running training *****")
         logger.info("  Num examples = %d", len(train_examples))
-        if args.do_extend_train:
-            logger.info("  Num examples extend = %d", len(extend_train_examples))
         logger.info("  Batch size = %d", args.train_batch_size)
         logger.info("  Num steps = %d", num_train_optimization_steps)
         all_input_ids = torch.tensor([f.input_ids for f in train_features], dtype=torch.long)
@@ -1036,7 +1009,6 @@ def main():
     if args.do_predict and (args.local_rank == -1 or torch.distributed.get_rank() == 0):
 
         train_triples = processor.get_train_triples(args.data_dir)
-        # extend_train_triples = processor.get_train_extend_triples(args.data_dir)
         dev_triples = processor.get_dev_triples(args.data_dir)
         test_triples = processor.get_test_triples(args.data_dir)
         all_triples = train_triples + dev_triples + test_triples

@@ -15,34 +15,45 @@ pip install -r requirements.txt
 
 (1) The benchmark knowledge graph datasets are in ./data. 
 
-(2) entity2text.txt or entity2textlong.txt in each dataset contains entity textual sequences.
+(2) The demo dataset in ./demo_data can help run small demo datasets. 
 
-(3) relation2text.txt in each dataset contains relation textual sequences.
+(3) entity2text.txt or entity2textlong.txt in each dataset contains entity textual sequences.
 
-<!-- ## Extract augmented data
+(4) relation2text.txt in each dataset contains relation textual sequences.
+
+## Extract augmented data
 
 ### Extract multi-hop facts
 
-All multi-hop fact datasets have been already extracted under ./data/WN18RR, ./data/umls, ./data/FB15k-237 and ./data/NELL_ONE_reconstructed paths, where are all called "extend_data_multi_hop.tsv". Here is an example of extracting 2-hop fact for WN18RR dataset
+Here is an example of extracting 2-hop facts for demo UMLS dataset
 
 ```shell
-python3 extract_multihop_triples_v2.py 
-    --task_name kg  
-    --data_dir data/WN18RR 
-    --max_seq_length 150 
-    --output_dir data/WN18RR 
+python3 extract_multihop_triples.py 
+    --data_dir ./demo_data/umls 
+    --data_type multihop
+    --K 2
+    --T 10
 ```
 
-### Extract rule-based facts
+### Extract implicit facts
 
-The rule-based fact datasets have been already extracted under ./data/WN18RR path, called "extend_data_rule_based.tsv". The steps are as follows:
+Here is an example of extracting implicit facts for demo UMLS dataset. The steps are as follows:
 
-(1) Run anyburl model under ./anyburl path, by the steps in [AnyBURL](https://web.informatik.uni-mannheim.de/AnyBURL/).
+```shell
+python3 extract_implicit_triples.py 
+    --data_dir ./demo_data/umls 
+    --data_type multihop
+    --cs 0.85
+    --n_body 100
+    --T 1
+```
+
+<!-- (1) Run anyburl model under ./anyburl path, by the steps in [AnyBURL](https://web.informatik.uni-mannheim.de/AnyBURL/).
 
 (2) For filtering and extracting from rules, run ./anyburl/extract_rules.py (Currently, some paths in the file need to be modified into parser form) -->
 
 
-## Reproducing results for original KG-BERT
+## Run for original KG-BERT
  
 
 ### WN18RR
@@ -53,7 +64,7 @@ python3 run_bert_link_prediction.py
 --do_train  
 --do_eval 
 --do_predict 
---data_dir ./data/WN18RR
+--data_dir ./demo_data/WN18RR
 --bert_model bert-base-uncased
 --max_seq_length 50
 --train_batch_size 32 
@@ -72,7 +83,7 @@ python3 run_bert_link_prediction.py
 --do_train  
 --do_eval 
 --do_predict 
---data_dir ./data/umls
+--data_dir ./demo_data/umls
 --bert_model bert-base-uncased
 --max_seq_length 15
 --train_batch_size 32 
@@ -83,7 +94,7 @@ python3 run_bert_link_prediction.py
 --eval_batch_size 135
 ```
 
-<!-- ### FB15k-237
+### FB15k-237
 
 ```shell
 python3 run_bert_link_prediction.py
@@ -91,7 +102,7 @@ python3 run_bert_link_prediction.py
 --do_train  
 --do_eval 
 --do_predict 
---data_dir ./data/FB15k-237
+--data_dir ./demo_data/FB15k-237
 --bert_model bert-base-uncased
 --max_seq_length 150
 --train_batch_size 32 
@@ -110,7 +121,7 @@ python3 run_bert_link_prediction.py
     --do_train  
     --do_eval 
     --do_predict 
-    --data_dir ./data/NELL_ONE_reconstructed
+    --data_dir ./demo_data/NELL_ONE_reconstructed
     --bert_model bert-base-uncased
     --max_seq_length 32 
     --train_batch_size 32 
@@ -120,9 +131,9 @@ python3 run_bert_link_prediction.py
     # --load_weights_path $load_path \
     --gradient_accumulation_steps 1 
     --eval_batch_size 5000 
-``` -->
+```
 
-## Reproducing results for KG-BERT via multi-hop augmentation
+## Run for KG-BERT via multi-hop augmentation
  
 
 ### WN18RR
@@ -134,7 +145,7 @@ python3 run_bert_link_prediction_multi_hop.py
     --do_extend_train
     --do_eval 
     --do_predict 
-    --data_dir ./data/WN18RR 
+    --data_dir ./demo_data/WN18RR 
     --bert_model bert-base-uncased
     # --load_weights_path $load_path # if needed for relaod model weights from .h5 file
     --max_seq_length 60 
@@ -156,7 +167,7 @@ python3 run_bert_link_prediction_multi_hop.py
     --do_eval 
     --do_predict 
     # --load_weights_path $load_path
-    --data_dir ./data/umls 
+    --data_dir ./demo_data/umls 
     --bert_model bert-base-uncased
     --max_seq_length 20 
     --train_batch_size 32 
@@ -176,7 +187,7 @@ python3 run_bert_link_prediction_multi_hop.py \
     --do_extend_train
     --do_eval 
     --do_predict 
-    --data_dir ./data/FB15k-237 
+    --data_dir ./demo_data/FB15k-237 
     --bert_model bert-base-uncased 
     --max_seq_length 150 
     --train_batch_size 32 
@@ -197,7 +208,7 @@ python3 run_bert_link_prediction_multi_hop.py \
     --do_extend_train
     --do_eval 
     --do_predict 
-    --data_dir ./data/NELL_ONE_reconstructed
+    --data_dir ./demo_data/NELL_ONE_reconstructed
     # --load_weights_path $load_path 
     --bert_model bert-base-uncased 
     --max_seq_length 40 
@@ -209,7 +220,7 @@ python3 run_bert_link_prediction_multi_hop.py \
     --eval_batch_size 5000 
 ```
 
-## Reproducing results for KG-BERT via rule based augmentation
+## Run for KG-BERT via rule based augmentation
 
 ### WN18RR
 
@@ -219,7 +230,7 @@ python3 run_bert_link_prediction_dropout.py \
     --do_train
     --do_eval 
     --do_predict 
-    --data_dir ./data/WN18RR 
+    --data_dir ./demo_data/WN18RR 
     --bert_model bert-base-uncased 
     # --load_weights_path $load_path 
     --max_seq_length 50 
@@ -240,7 +251,7 @@ python3 run_bert_link_prediction_dropout.py
     --do_eval 
     --do_predict 
     # --load_weights_path $load_path
-    --data_dir ./data/umls 
+    --data_dir ./demo_data/umls 
     --bert_model bert-base-uncased
     --max_seq_length 15
     --train_batch_size 32 
@@ -262,7 +273,7 @@ python3 run_bert_link_prediction_mixed.py \
     --do_extend_train
     --do_eval 
     --do_predict 
-    --data_dir ./data/WN18RR 
+    --data_dir ./demo_data/WN18RR 
     --bert_model bert-base-uncased 
     # --load_weights_path $load_path 
     --max_seq_length 50 
@@ -283,7 +294,7 @@ python3 run_bert_link_prediction_mixed.py
     --do_eval 
     --do_predict 
     # --load_weights_path $load_path
-    --data_dir ./data/umls 
+    --data_dir ./demo_data/umls 
     --bert_model bert-base-uncased
     --max_seq_length 20
     --train_batch_size 32 

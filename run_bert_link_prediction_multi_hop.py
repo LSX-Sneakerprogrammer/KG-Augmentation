@@ -46,7 +46,7 @@ from transformers import BertPreTrainedModel
 from transformers import BertModel, BertTokenizer
 import torch.nn as nn
 
-os.environ['CUDA_VISIBLE_DEVICES']= '0'
+# os.environ['CUDA_VISIBLE_DEVICES']= '0'
 #torch.backends.cudnn.deterministic = True
 
 logger = logging.getLogger(__name__)
@@ -136,7 +136,7 @@ class KGProcessor(DataProcessor):
     def get_train_extend_examples(self, data_dir):
         """See base class."""
         return self._create_examples(
-            self._read_tsv(os.path.join(data_dir, "extend_data_multi_hop.tsv")), "train_extend", data_dir)
+            self._read_tsv(os.path.join(data_dir, "multihop.tsv")), "train_extend", data_dir)
 
     def get_dev_examples(self, data_dir):
         """See base class."""
@@ -178,7 +178,7 @@ class KGProcessor(DataProcessor):
     
     def get_train_extend_triples(self, data_dir):
         """Gets training triples."""
-        return self._read_tsv(os.path.join(data_dir, "extend_data_multi_hop.tsv"))
+        return self._read_tsv(os.path.join(data_dir, "multihop.tsv"))
 
     def get_dev_triples(self, data_dir):
         """Gets validation triples."""
@@ -187,22 +187,7 @@ class KGProcessor(DataProcessor):
     def get_test_triples(self, data_dir):
         """Gets test triples."""
         return self._read_tsv(os.path.join(data_dir, "test.tsv"))
-    
-    # def construct_tensor_matrix(self, lines, entities, relations):
-    #     """Find 2-hop triples by M number of N * N tensors"""
-    #     M = len(relations)
-    #     N = len(entities)
-    #     tensor_matrix = np.zeros((M, N, N))
-    #     for (i, line) in enumerate(lines):
-    #         h_index = entities.index(line[0])
-    #         t_index = entities.index(line[2])
-    #         r_index = relations.index(line[1])
-    #         tensor_matrix[r_index][h_index][t_index] += 1
-    #     for i in range(M):
-    #         for j in range(M):
-    #             if i == j:
-    #                 break
-    #             tensor_2_hop = np.dot(tensor_matrix[i, :, :], tensor_matrix[j, :, :])
+
                 
 
     def _create_examples(self, lines, set_type, data_dir):
