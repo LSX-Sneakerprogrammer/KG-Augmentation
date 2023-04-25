@@ -1,4 +1,4 @@
-# KG-BERT: BERT for Knowledge Graph Completion
+# Data Augmented Knowledge Graph Completion via Pre-trained Language Models
 
 The repository is modified from [KG-BERT](https://github.com/yao8839836/kg-bert) and tested on Python 3.7+.
 
