@@ -20,6 +20,16 @@ pip install -r requirements.txt
 (3) entity2text.txt or entity2textlong.txt in each dataset contains entity textual sequences.
 
 (4) relation2text.txt in each dataset contains relation textual sequences.
+## Statistics of Dataset
+
+| Augmented Datasets | Number of New Relations | Number of New Facts |
+| :----:| :----: | :----: |
+| WN18RR-DAMH | 84 | 13,8711 |
+| WN18RR-DAI | 9 | 60,403 |
+| UMLS-DAMH | 778 | 16,035 |
+| UMLS-DAI | 7 | 10,575 |
+| FB15k-237 (few-shot) | 702 | 116,544 |
+| NELL-ONE (few-shot) | 569 | 136,342 |
 
 ## Extract augmented data
 
